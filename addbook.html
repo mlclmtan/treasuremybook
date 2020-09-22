@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>私人圖書館</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/bootstrap/css/bootstrap.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/select2/select2.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/perfect-scrollbar/perfect-scrollbar.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <!--===============================================================================================-->
+  </head>
+
+  <body>
+    <div class="limiter">
+      <div class="container-table100">
+        <div id="mal">
+          <h2><a href="./index.php">📚Malcolm的圖書館📚</a></h2>
+        </div>
+
+        <div class="page">
+          <div class="page__demo">
+            <!-- <form class="search"> -->
+            <div class="search">
+              <div class="a-field search__field">
+                <input
+                  type="text"
+                  id="query"
+                  class="r-text-field a-field__input search__input"
+                  placeholder="e.g books.com.tw//0010847169"
+                  required
+                  autocomplete="off"
+                />
+                <button
+                  class="r-button search__button search__clear"
+                  type="reset"
+                >
+                  <span class="search__clear-label">清除</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 47.971 47.971"
+                    class="search__icon search__icon-clear"
+                  >
+                    <path
+                      d="M28.228 23.986L47.092 5.122a2.998 2.998 0 0 0 0-4.242 2.998 2.998 0 0 0-4.242 0L23.986 19.744 5.121.88a2.998 2.998 0 0 0-4.242 0 2.998 2.998 0 0 0 0 4.242l18.865 18.864L.879 42.85a2.998 2.998 0 1 0 4.242 4.241l18.865-18.864L42.85 47.091c.586.586 1.354.879 2.121.879s1.535-.293 2.121-.879a2.998 2.998 0 0 0 0-4.242L28.228 23.986z"
+                    />
+                  </svg>
+                </button>
+                <label class="a-field__label-wrap search__hint" for="query">
+                  <span class="a-field__label"
+                    >您想收藏什麼書呢？（只支援博客來）</span
+                  >
+                </label>
+              </div>
+              <button
+                class="r-button search__button search__submit"
+                type="submit"
+                onclick="postURL()"
+              >
+                <span class="search__submit-label">搜尋</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  class="search__icon search__icon-search"
+                >
+                  <path
+                    d="M8.627,7.885C8.499,8.388,7.873,8.101,8.13,8.177L4.12,7.143c-0.218-0.057-0.351-0.28-0.293-0.498c0.057-0.218,0.279-0.351,0.497-0.294l4.011,1.037C8.552,7.444,8.685,7.667,8.627,7.885 M8.334,10.123L4.323,9.086C4.105,9.031,3.883,9.162,3.826,9.38C3.769,9.598,3.901,9.82,4.12,9.877l4.01,1.037c-0.262-0.062,0.373,0.192,0.497-0.294C8.685,10.401,8.552,10.18,8.334,10.123 M7.131,12.507L4.323,11.78c-0.218-0.057-0.44,0.076-0.497,0.295c-0.057,0.218,0.075,0.439,0.293,0.495l2.809,0.726c-0.265-0.062,0.37,0.193,0.495-0.293C7.48,12.784,7.35,12.562,7.131,12.507M18.159,3.677v10.701c0,0.186-0.126,0.348-0.306,0.393l-7.755,1.948c-0.07,0.016-0.134,0.016-0.204,0l-7.748-1.948c-0.179-0.045-0.306-0.207-0.306-0.393V3.677c0-0.267,0.249-0.461,0.509-0.396l7.646,1.921l7.654-1.921C17.91,3.216,18.159,3.41,18.159,3.677 M9.589,5.939L2.656,4.203v9.857l6.933,1.737V5.939z M17.344,4.203l-6.939,1.736v9.859l6.939-1.737V4.203z M16.168,6.645c-0.058-0.218-0.279-0.351-0.498-0.294l-4.011,1.037c-0.218,0.057-0.351,0.28-0.293,0.498c0.128,0.503,0.755,0.216,0.498,0.292l4.009-1.034C16.092,7.085,16.225,6.863,16.168,6.645 M16.168,9.38c-0.058-0.218-0.279-0.349-0.498-0.294l-4.011,1.036c-0.218,0.057-0.351,0.279-0.293,0.498c0.124,0.486,0.759,0.232,0.498,0.294l4.009-1.037C16.092,9.82,16.225,9.598,16.168,9.38 M14.963,12.385c-0.055-0.219-0.276-0.35-0.495-0.294l-2.809,0.726c-0.218,0.056-0.351,0.279-0.293,0.496c0.127,0.506,0.755,0.218,0.498,0.293l2.807-0.723C14.89,12.825,15.021,12.603,14.963,12.385"
+                  ></path>
+                </svg>
+              </button>
+              <!-- </form> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      img {
+        position: absolute;
+        display: none;
+        width: 26vw;
+      }
+
+      #o:hover + img {
+        display: block;
+      }
+
+      #mal {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 23px;
+        margin-top: 30px;
+      }
+
+      /*
+* The r-text-field component
+*/
+
+      /*
+The component will reset input browser styles
+*/
+
+      .r-text-field {
+        --uiTextFieldPlaceholderColor: var(--textFieldPlaceholderColor);
+
+        font-family: inherit;
+        font-size: inherit;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        border-radius: 0;
+        border-style: solid;
+      }
+
+      .r-text-field::-webkit-input-placeholder {
+        color: var(--uiTextFieldPlaceholderColor);
+      }
+
+      .r-text-field::-moz-placeholder {
+        opacity: 1;
+        color: var(--uiTextFieldPlaceholderColor);
+      }
+
+      .r-text-field:invalid {
+        outline: none;
+        box-shadow: none;
+      }
+
+      /*
+* The r-button component
+*/
+
+      /*
+The component will reset button browser styles
+*/
+
+      .r-button {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        cursor: pointer;
+
+        font-family: inherit;
+        font-size: inherit;
+      }
+
+      /* Remove the inner border and padding in Firefox. */
+
+      .r-button::-moz-focus-inner,
+      .r-button[type='button']::-moz-focus-inner,
+      .r-button[type='reset']::-moz-focus-inner,
+      .r-button[type='submit']::-moz-focus-inner {
+        border-style: none;
+        padding: 0;
+      }
+
+      /*
+* The a-field component
+*/
+
+      /*
+ 1. The --aFieldHeight option defines an input height. And this option is needed for calculations of a hint final position 
+ 2. The --aFieldHintFinalCoordinate option defines calculations of the final Y-axis coordinate
+ 3. The —aFieldPaddingLeft option defines left indent for a hint and query text
+*/
+
+      .a-field {
+        --uiaFieldHeight: var(--aFieldHeight);
+        --uiaFieldHintFinalCoordinate: var(
+          --aFieldHintFinalCoordinate,
+          var(--uiaFieldHeight)
+        );
+        --uiaFieldPaddingLeft: var(--aFieldPaddingLeft);
+
+        position: relative;
+        padding-top: calc(
+          var(--uiaFieldHintFinalCoordinate) - var(--uiaFieldHeight)
+        );
+        /* 1, 2 */
+      }
+
+      .a-field__input {
+        box-sizing: border-box;
+        height: var(--uiaFieldHeight);
+        /* 1 */
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: var(--uiaFieldPaddingLeft);
+        /* 3 */
+      }
+
+      .a-field__input::-webkit-input-placeholder {
+        opacity: 0;
+        transition: opacity 0.2s ease-out;
+      }
+
+      .a-field__input::-moz-placeholder {
+        opacity: 0;
+      }
+
+      .a-field__input:focus::-webkit-input-placeholder {
+        opacity: 1;
+        transition-delay: 0.2s;
+      }
+
+      .a-field__input:focus::-moz-placeholder {
+        opacity: 1;
+      }
+
+      .a-field__label-wrap {
+        box-sizing: border-box;
+        width: 100%;
+        height: var(--uiaFieldHeight);
+        /* 1 */
+
+        pointer-events: none;
+        cursor: text;
+
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      .a-field__label {
+        position: absolute;
+        left: var(--uiaFieldPaddingLeft);
+        /* 3 */
+        bottom: calc(38% - 0.5em);
+        line-height: 1;
+        pointer-events: none;
+      }
+
+      /* 
+  I needed to create an animation onle Chromium broswers because:
+  1. Firefox doesn't support a placeholder animation
+  2. I couldn't make an correct animation at Edge
+*/
+
+      @supports (-webkit-appearance: none) {
+        .a-field__label {
+          transition: bottom 0.2s cubic-bezier(0.9, -0.15, 0.1, 1.15),
+            opacity 0.2s ease-out;
+          will-change: bottom, opacity;
+        }
+      }
+
+      /* If a user had inserted a text of query a hint will be hidden */
+
+      .a-field__input:not(:placeholder-shown)
+        ~ .a-field__label-wrap
+        .a-field__label {
+        opacity: 0;
+        bottom: 85%;
+      }
+
+      /* If the focal point is a field a hint will be displayed */
+
+      .a-field__input:focus ~ .a-field__label-wrap .a-field__label {
+        opacity: 1;
+        bottom: var(--uiaFieldHintFinalCoordinate);
+        /* 2 */
+      }
+
+      /*
+* the search component
+*/
+
+      .search {
+        --searchFieldHeight: 50px;
+        --searchButtonSize: var(--searchFieldHeight);
+        --textFieldPlaceholderColor: #6c7ae0;
+
+        --aFieldHeight: var(--searchFieldHeight);
+        /* The 10px value has been calculated for this demo and you can change it */
+        --aFieldHintFinalCoordinate: calc(var(--searchFieldHeight) + 10px);
+        --aFieldPaddingLeft: 30px;
+
+        color: #6c7ae0;
+        position: relative;
+      }
+
+      /* 
+ 1. I needed to set the currentColor value for correct displaying a border on iOS devices
+*/
+
+      .search__input {
+        width: 100%;
+        border-style: solid;
+        border-width: 3px;
+        border-color: #6c7ae0;
+        /* 1 */
+
+        border-radius: 25px;
+        background-color: transparent;
+
+        font-size: 18px;
+        color: currentColor;
+      }
+
+      .search__input:focus {
+        outline: none;
+      }
+
+      .search__hint {
+        font-size: 16px;
+      }
+
+      .search__button {
+        color: currentColor;
+      }
+
+      .search__button:focus {
+        outline: none;
+      }
+
+      .search__clear {
+        width: 1em;
+        height: 1em;
+        font-size: var(--searchButtonSize);
+
+        position: absolute;
+        bottom: 0;
+        display: none;
+      }
+
+      /* If a user starts typing a clearing button will be displayed */
+
+      .search__input:not(:placeholder-shown) ~ .search__clear {
+        display: block;
+      }
+
+      /* If the focal point is a clearing button the hint will be displayed */
+
+      .search__clear:focus ~ .a-field__label-wrap .a-field__label {
+        opacity: 1;
+        bottom: var(--aFieldHintFinalCoordinate);
+      }
+
+      .search__clear-label {
+        position: absolute;
+        clip: rect(0 0 0 0);
+        overflow: hidden;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+      }
+
+      .search__icon {
+        fill: currentColor;
+        display: block;
+
+        box-sizing: border-box;
+        width: 1.5em;
+        height: 1.5em;
+        padding: 0.25em;
+
+        position: absolute;
+        top: calc(50% - 0.75em);
+        left: calc(50% - 0.75em);
+      }
+
+      .search__button:focus .search__icon {
+        box-shadow: 0 0 0 3px currentColor;
+      }
+
+      .search__icon-clear {
+        font-size: 18px;
+      }
+
+      @media (max-width: 640px) {
+        .search__input {
+          padding-right: 50px;
+        }
+
+        .search__clear {
+          right: 10px;
+        }
+
+        .search__submit {
+          display: block;
+          width: 100%;
+          padding: 12px 15px;
+
+          background-color: #6c7ae0;
+          text-transform: uppercase;
+          color: white;
+          border-radius: 25px;
+          margin-top: 25px;
+        }
+
+        .search__submit:focus {
+          box-shadow: 0 0 0 3px currentColor;
+          color: #422380;
+        }
+
+        .search__icon-search {
+          display: none;
+        }
+      }
+
+      @media (min-width: 641px) {
+        .search__input {
+          padding-right: 115px;
+        }
+
+        .search__clear {
+          right: var(--searchButtonSize);
+        }
+
+        .search__submit {
+          width: 1em;
+          height: 1em;
+          font-size: var(--searchButtonSize);
+
+          position: absolute;
+          bottom: 0;
+          right: 10px;
+        }
+
+        .search__submit-label {
+          position: absolute;
+          clip: rect(0 0 0 0);
+          overflow: hidden;
+          width: 1px;
+          height: 1px;
+          margin: -1px;
+        }
+
+        .search__icon-search {
+          font-size: 22px;
+        }
+      }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      postURL = function () {
+        let bookURL = document.getElementById('query').value;
+        axios
+          .post('./addbook.php', { text: bookURL })
+          .then(function (response) {
+            // console.log(response);
+            alert('收藏成功，請返回主頁');
+            window.location.href = './index.php';
+          })
+          .catch(function (error) {
+            alert(error);
+          });
+
+        // var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function () {
+        //   if (this.readyState == 4 && this.status == 200) {
+        //     // document.getElementById('demo').innerHTML = this.responseText;
+        //     // window.location.href = './index.php';
+        //     console.log('success');
+        //   }
+        // };
+        // xhttp.open('POST', './addbook.php', true);
+        // xhttp.setRequestHeader(
+        //   'Content-type',
+        //   'application/x-www-form-urlencoded'
+        // );
+        // xhttp.send(bookURL);
+      };
+    </script>
+
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+  </body>
+</html>
