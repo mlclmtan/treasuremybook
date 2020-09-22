@@ -15,7 +15,7 @@ $cnauthor = $html->find('div[class="type02_p003 clearfix"]', 0)->children(0)->ch
 $enauthor = $html->find('div[class="type02_p003 clearfix"]', 0)->children(0)->children(1)->children(0)->plaintext;
 
 try {
-  $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+  $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
   // set the PDO error mode to exception
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
